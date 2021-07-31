@@ -1,12 +1,18 @@
 import React from "react";
 import PaypalExpressBtn from "react-paypal-express-checkout";
+import axios from 'axios';
 
 export default function PayDownload(props) {
     const onSuccess = payment => {
         // Congratulation, it came here means everything's fine!
         console.log("The payment was succeeded!", payment);
         // You can bind the "payment" object's value to your state or props or whatever here, please see below for sample returned data
-      
+        const download = async()=>{
+          
+          await axios.get(`${process.env.NEXT_PUBLIC_API}download/${props.id}`)
+          
+        }
+        download()
       };
   
       const onCancel = data => {

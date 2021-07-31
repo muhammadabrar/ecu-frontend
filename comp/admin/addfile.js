@@ -18,7 +18,7 @@ export default function Addfile(props) {
   const [Isprogresssbar, setIsprogresssbar] = useState(false);
 
   //search states
-  const [Ismake, setIsmake] = useState(false);
+  const [Ismake, setIsmake] = useState(1);
 
 
   //inputs states
@@ -53,7 +53,7 @@ export default function Addfile(props) {
         })
       }
       getinputoptions()
-  }, []);
+  }, [Ismake]);
 
 
 
@@ -129,6 +129,7 @@ const createfile = async(event)=>{
             setinput_file(null)
             setinput_Tool_read('')
             setprogresssbar(0)
+          setIsmake(oldKey => oldKey + 1)
             setIsprogresssbar(false)
             setdatacreationSuccess(true)
             setdatacreationErr(false)

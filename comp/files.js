@@ -238,7 +238,7 @@ if(e.target.value){
               <td>{data.Tool_read}</td>
               <td>{data.size}</td>
               <td>{data.price} $</td>
-              <td className="m-0"><PayDownload  total={data.price} /></td>
+              <td className="m-0"><PayDownload id={data.id} total={data.price} /></td>
             </tr>
         )
         }

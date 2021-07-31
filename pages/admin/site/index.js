@@ -21,11 +21,11 @@ export default function Sitemanager() {
   const [loading, setLoading] = useState(true)
   const [pages, setpages] = useState('about')
 
-useAuth()
+// useAuth()
 useEffect(() => {
   const timer = setTimeout(() => {
     setLoading(false)
-  }, 5000);
+  }, 2000);
   return () => clearTimeout(timer);
 }, []);
 

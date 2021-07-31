@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from '../../comp/admin/sidebar'
 
 import Breadcrumb from '../../comp/admin/breadcrumb';
-import Orders from '../../comp/admin/currentOrders';
+import Orders from '../../comp/admin/orders';
 import TuningFiles from '../../comp/admin/tuningfiles';
 
 import useAuth from "../../hooks/useAuth";
@@ -19,7 +19,7 @@ import { SemipolarLoading  } from 'react-loadingg';
 
 export default function Index() {
   const [loading, setLoading] = useState(true)
-useAuth()
+// useAuth()
 useEffect(() => {
   const timer = setTimeout(() => {
     setLoading(false)

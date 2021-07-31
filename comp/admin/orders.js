@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 export default function Order(props) {
   const [orders, setorders] = useState([]);
-  const [status, setstatus] = useState([]);
+  const [status, setstatus] = useState("Pending");
 
   useEffect(() => {
     const ordersdata = async()=>{

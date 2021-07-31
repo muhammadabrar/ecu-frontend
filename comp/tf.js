@@ -9,6 +9,9 @@ export default function Tf(props) {
   const [items, setitems] = useState([]);
   const [selecteditem, setselecteditem] = useState([]);
   const [step2, setstep2] = useState(false);
+  const [next, setnext] = useState(false);
+  const [Iscat, setIscat] = useState();
+
 
 
 
@@ -45,6 +48,7 @@ useEffect(() => {
    
    filter.map((item)=>{
     i = i +item.price
+    setnext(true)
     setselecteditem(oldArray => [...oldArray, item]);
     setprice(i)
    })
@@ -53,7 +57,23 @@ useEffect(() => {
   }
 
 }, [items]);
+function offon(ccat){
+  setselecteditem([])
+  setprice(0)
+  setIscat(ccat)
+  setnext(false)
 
+  setitems(tuningfiles.map((item)=>{
+    return {
+      select: false,
+      id: item.id,
+      cat_id: item.cat_id,
+      title: item.title,
+      price: item.price,
+
+    }
+  }))
+}
 
 if(step2){
  return <TfNext selecteditem={selecteditem} price={price} />
@@ -71,11 +91,10 @@ if(step2){
            <MDBContainer >
 
 {cats.map((cat, index)=>
-<details key={cat.id} >
+<details key={cat.id}  onClick={() => offon(cat.cat)}>
 <summary>{cat.cat}</summary>
 
-
-<div class="faq__content">
+{cat.cat == Iscat? <div class="faq__content">
 <div className="row bg-white p-3 m-3">
 
 {items.filter(file => file.cat_id == cat.id).map((file)=>
@@ -99,6 +118,7 @@ if(step2){
       </div>
 
 </div>
+: ''}
 </details>)}
 
 <div className="row justify-content-end">
@@ -107,7 +127,7 @@ if(step2){
 <MDBInputGroup className='' >
   
   <MDBInputGroupElement className="form-control " value={price + "€"} disable style={{borderRadius: "0px", borderColor: "#000"}} placeholder="Total Payment:" type='text' />
-  <MDBBtn outline className="text-white border border-black bg-black" onClick={()=> setstep2(true)} style={{borderRadius: "0px"}}>Next <i class="fas fa-chevron-right"></i></MDBBtn>
+  <button outline className="text-white border border-black bg-black" disabled={!next} onClick={()=> setstep2(true)} style={{borderRadius: "0px"}}>Next <i class="fas fa-chevron-right"></i></button>
 </MDBInputGroup>
 </div>
 </div>

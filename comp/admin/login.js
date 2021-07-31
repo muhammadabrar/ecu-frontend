@@ -93,7 +93,7 @@ export default function Login(props) {
           <label>Email</label>
         </div>
         <div className={styles.txt_field}>
-          <input type="password" value={pass} onChange={(e)=> setPass(e.target.value)} required />
+          <input type="password" autocomplete value={pass} onChange={(e)=> setPass(e.target.value)} required />
           <span></span>
           <label>Password</label>
         </div>
