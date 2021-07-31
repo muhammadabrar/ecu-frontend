@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import Select from 'react-select';
 import Nav from '../comp/nav'
 import Intro from '../comp/landing-intro'
 import Services from '../comp/services'
@@ -26,17 +25,16 @@ export default function App() {
     verify()
 }, []);
 useEffect(() => {
-  const verify = async()=>{
+  const saveverify = async()=>{
     const req = await axios.put(`${process.env.NEXT_PUBLIC_API}visiters/${ip}`)
     .then(res => {
       console.log(res.data);
     })
   }
-  verify()
+  saveverify()
 }, [ip]);
   // https://geoip-db.com/jsonp/
 
-let Options1 = [{value: 1, label: "warka sdsdang"}, {value: 2, label: "dsad dang"} ,{value: 3, label: "warka ddddang"},{value: 4, label: "warkdsda dang"}]
   return (
       <>
      

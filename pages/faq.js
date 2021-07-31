@@ -14,22 +14,12 @@ export default function FAQ_page() {
 
   return (
       <>
-     
      <Nav value={0} page={'How'} /> 
     <Intro links={links} title={"FREQUENTLY ASKED QUESTIONS"}/>
-    
     <div className="main">
-
-
-<Faq />
-<Footer />
+    <Faq />
+    <Footer />
     </div>
-
-  
   </>
-
-
-
-
 );
 }

@@ -33,7 +33,6 @@ export default function Order(props) {
     </div>
     <div className=" overflow-auto">
 <table className="table">
-  <h1>{test}</h1>
   <tr className="bg-info">
     <th>#</th>
     <th>Name</th>

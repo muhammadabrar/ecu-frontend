@@ -2,7 +2,7 @@ import Select from 'react-select';
 import React, { useState, useEffect } from 'react';
 import { MDBContainer, MDBTable, MDBTableHead, MDBTableBody, MDBInputGroup, MDBInputGroupElement, MDBBtn, } from 'mdb-react-ui-kit';
 import axios from 'axios';
-
+import PayDownload from './pay&download';
 
 
 export default function Files(props) {
@@ -227,7 +227,7 @@ if(e.target.value){
         </tr>
         
         {data.map((data, index)=>
-            <tr key={index + 1}>
+            <tr key={data.id}>
               <td>{index +1}</td>
               <td>{data.make} {data.model}</td>
               <td>{data.engine}</td>
@@ -237,8 +237,8 @@ if(e.target.value){
               <td>{data.ecu}	</td>
               <td>{data.Tool_read}</td>
               <td>{data.size}</td>
-              <td>{data.price} €</td>
-              <td className="m-0"><a href="#"><button className="btn btn-sm bg-primary btn-dark">BUY NOW</button></a></td>
+              <td>{data.price} $</td>
+              <td className="m-0"><PayDownload  total={data.price} /></td>
             </tr>
         )
         }
