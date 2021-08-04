@@ -1,13 +1,13 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
 import Sidebar from '../../../comp/admin/sidebar'
 
-import useAuth from "../../../hooks/useAuth";
 import { SemipolarLoading  } from 'react-loadingg';
 import About from '../../../comp/admin/site/about';
 import FQ from '../../../comp/admin/site/fq';
 import Contacts from '../../../comp/admin/site/contacts';
+import { useRouter } from 'next/router'
 
 
 
@@ -20,8 +20,8 @@ import Contacts from '../../../comp/admin/site/contacts';
 export default function Sitemanager() {
   const [loading, setLoading] = useState(true)
   const [pages, setpages] = useState('about')
+  const router = useRouter()
 
-// useAuth()
 useEffect(() => {
   const timer = setTimeout(() => {
     setLoading(false)

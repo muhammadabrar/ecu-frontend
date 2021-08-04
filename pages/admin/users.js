@@ -1,17 +1,19 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 
-
-
-
+import axios from 'axios';
 import User from '../../comp/admin/users/users'
 import Sidebar from '../../comp/admin/sidebar'
 import Breadcrumb from '../../comp/admin/breadcrumb';
+import { useRouter } from 'next/router'
+
+axios.defaults.withCredentials = true
 
 
 
 
 export default function Users() {
+  const router = useRouter()
   
 
   return (
@@ -19,7 +21,7 @@ export default function Users() {
 <>
 <div className="admin">
        
-       <Sidebar />
+       <Sidebar  />
        <Breadcrumb />
             
        <User />

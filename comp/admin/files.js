@@ -122,6 +122,8 @@ const getsearchdata = async (e)=>{
 const deleteFile = async (id)=>{
     const req = await axios.delete(`${process.env.NEXT_PUBLIC_API}deletefile/${id}`)
     .then(res => {
+      setrefreshdata(oldKey => oldKey + 1)
+
       if(res.data.err){
       setrefreshdata(oldKey => oldKey + 1)
       }else{
@@ -129,6 +131,10 @@ const deleteFile = async (id)=>{
         setrefreshdata(oldKey => oldKey + 1)
     }
     })
+}
+const downloadfile = async (name)=>{
+  await axios.get(`${process.env.NEXT_PUBLIC_API}downloadfile/${name}`)
+  
 }
 
 
@@ -266,7 +272,7 @@ const refresh=()=>{
               <td>{data.price} €</td>
               <td className="m-0"><a href={"/admin/edit/"+data.id}><button className="btn btn-sm bg-warning btn-dark"><i className="fas fa-edit" aria-hidden="true"></i></button></a></td>
               <td className="m-0"><a href="#" onClick={()=> deleteFile(data.id)}><button className="btn btn-sm bg-warning btn-dark"><i className="fas fa-trash-alt" aria-hidden="true"></i></button></a></td>
-              <td className="m-0"><a href="#" onClick={()=> deleteFile(data.id)}><button className="btn btn-sm bg-warning btn-dark"><i className="fas fa-download" aria-hidden="true"></i></button></a></td>
+              <td className="m-0"><a href="#" onClick={()=> downloadfile(data.id)}><button className="btn btn-sm bg-warning btn-dark"><i className="fas fa-download" aria-hidden="true"></i></button></a></td>
             </tr>
         )
         }

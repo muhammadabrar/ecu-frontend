@@ -8,6 +8,7 @@ import ReactDOM from "react-dom";
 import App from "next/app";
 import Head from "next/head";
 import Router from "next/router";
+import {AuthProvider} from "../hooks/auth"
 function MyApp({ Component, pageProps }) {
     const Layout = Component.layout || (({ children }) => <>{children}</>);
 
@@ -21,10 +22,16 @@ function MyApp({ Component, pageProps }) {
       <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700&display=swap" rel="stylesheet" />
     </Head>
     <body className="body">
+    <AuthProvider>
+      
     <Layout>
+
       <Component {...pageProps} />
     </Layout>
+    </AuthProvider>
+
     </body>
+
   </React.Fragment>)
 }
 

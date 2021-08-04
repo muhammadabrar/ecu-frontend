@@ -1,17 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {MDBContainer,
         MDBBtn,} from 'mdb-react-ui-kit';
 export default function User(props) {
+  const [data, setdata] = useState([]);
     const [basicModal, setBasicModal] = useState(false);
     const [showPass, setshowPass] = useState(false);
+    const [showdeletemsg, setshowdeletemsg] = useState(false);
+
     const [Name, setName] = useState();
     const [email, setEmail] = useState();
     const [pass, setPass] = useState();
     const [confirmPass, setConfirmPass] = useState();
+    const [refresh, setrefresh] = useState();
+
+
     const [confirmPassmsg, setConfirmPassmsg] = useState(false);
 
-
+    useEffect(() => {
+      const msg = async()=>{
+        const req = await axios.get(`${process.env.NEXT_PUBLIC_API}users`)
+        .then(res => {
+            setdata(res.data.user)
+        }).catch(err => {
+            // what now?
+      
+            console.log("get user error");
+            console.log(err);
+        })
+      }
+     
+      msg()
+      
+  }, [refresh]);
   const toggleShow = () => setBasicModal(true);
   const toggleClose = () => setBasicModal(false);
   
@@ -38,8 +59,26 @@ export default function User(props) {
     const req = await axios.post(`http://localhost:8000/user`, {data})
       .then(res => {
         console.log(res);
+        setrefresh(old => old + 1)
       })
   }
+
+const deleteUser = async(id)=>{
+  const req = await axios.delete(`http://localhost:8000/deleteUser/${id}`)
+  .then(res => {
+    if(res.data.success){
+      setshowdeletemsg(true)
+      setrefresh(old => old + 1)
+
+    }
+    setTimeout(() => {
+      setshowdeletemsg(false)
+    }, 10000);
+  })
+}
+
+
+
    return( 
    <MDBContainer>
    <div className="table-title mt-5 pt-5">
@@ -49,39 +88,29 @@ export default function User(props) {
   
 
     </div>
+    {showdeletemsg && <p className="text-danger p-4">User has been deleted</p>}
     <div className=" overflow-auto">
 <table className="table">
   <tr className="bg-info">
     <th>#</th>
     <th>Name</th>
     <th>Email</th>
-    <th>Date</th>
-    <th>Subject</th>
-    <th>Message</th>
-
-
-
+    <th>delete</th>
   </tr>
+
+  {data.map((data, index)=>
   <tr>
-    <td>1</td>
-    <td>Maria Anders</td>
-    <td>example@gmail.com</td>
-    <td>Saturday, 3 July 2021</td>
-    <td>My Tuning File Order</td>
-    <td><button className="btn btn-sm text-white bg-info"><i className="fas fa-envelope"></i> Detail</button>
-</td>
+  <td>1</td>
+  <td>{data.name}</td>
+  <td>{data.email}</td>
+  <td className="m-0"><a href="#" onClick={()=> deleteUser(data.id)}><button className="btn btn-sm bg-danger btn-dark"><i className="fas fa-trash-alt" aria-hidden="true"></i></button></a></td>
 
-  </tr>
-  <tr>   
-     <td>1</td>
-    <td>Maria Anders</td>
-    <td>example@gmail.com</td>
-    <td>Saturday, 3 July 2021</td>
-    <td>My Tuning File Order</td>
-    <td><button className="btn btn-sm text-white bg-info"><i className="fas fa-envelope"></i> Detail</button>
-</td>
-  </tr>
+
+</tr>
   
+  )}
+  
+ 
 </table>
 </div>
 {basicModal? <div className="model">

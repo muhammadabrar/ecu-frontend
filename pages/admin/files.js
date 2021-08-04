@@ -1,5 +1,4 @@
 
-import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router'
 import axios from 'axios';
 
@@ -10,41 +9,47 @@ import EditFile from '../../comp/admin/editfile';
 import Breadcrumb from '../../comp/admin/breadcrumb';
 import { SemipolarLoading  } from 'react-loadingg';
 
+import React, { useState, useEffect, useContext } from 'react';
 
+import { AuthContext } from '../../hooks/auth';
+
+axios.defaults.withCredentials = true
 
 
 
 
 
 export default function ECUFiles() {
+
+  const [auth, setAuth] = useContext(AuthContext)
+  const [name, setname] = useState('')
   const [loading, setLoading] = useState(true)
   const router = useRouter()
 
 useEffect(() => {
-    const verify = async()=>{
+//   const verify = async()=>{
+//     const req = await axios.get(`${process.env.NEXT_PUBLIC_API}verifyAuth`)
+//     .then(res => {
+//         if(res.data.user){
+// console.log("user is: "+res.data.user)
+//             setname(res.data.user.name)
 
-        const req = await axios.get(`${process.env.NEXT_PUBLIC_API}verifyAuth`)
-        .then(res => {
-            if(res.data){
-              console.log("you are login")
-
-            }else{
-                if(res.data){
-              router.push(`/admin/login`)
-            }
-            }
-        }).catch(err => {
-            // what now?
-            router.push(`/admin/login`)
-            console.log("verification  error");
-            console.log(err);
-        })
-      }
-      verify()
+//           if(res.data.user.id == auth){
+//             console.log(res.data.user.name + "your are in")
+//           }else{
+//           router.push(`/admin/login`)
+//         }
+//         }else{
+//           router.push(`/admin/login`)
+//         }
+//       console.log(res.data);
+//     })
+//   }
+//   verify()
 
   const timer = setTimeout(() => {
     setLoading(false)
-  }, 2500);
+  }, 1000);
   return () => clearTimeout(timer);
 }, []);
 
@@ -57,7 +62,7 @@ if(loading){
   return (
       <div className="admin">
        
-<Sidebar />
+<Sidebar name={name}/>
       <Breadcrumb />
      
       <div className="container mt-5 pt-5">

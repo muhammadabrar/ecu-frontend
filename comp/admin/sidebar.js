@@ -3,9 +3,25 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router'
 export default function Sidebar(props) {
-
+const [title, settitle] = useState("loading..")
    const router = useRouter()
-
+   // useEffect(() => {
+   //    const verify = async()=>{
+   //      const req = await axios.get(`${process.env.NEXT_PUBLIC_API}verifyAuth`)
+   //      .then(res => {
+   //          if(res.data.user){
+   //            if(res.data.user.id == auth){
+   //             settitle(res.data.user.name)
+   //              console.log("your are in")
+   //            }else{
+   //            router.push(`/admin/login`)
+   //          }
+   //          }
+   //        console.log(res.data);
+   //      })
+   //    }
+   //    verify()
+   //  }, []);
 
    const logout = async()=>{
       const req = await axios.get(`${process.env.NEXT_PUBLIC_API}logout`)
@@ -24,7 +40,7 @@ export default function Sidebar(props) {
          </label>
          <nav id="sidebar">
             <div class="title">
-               Side Menu
+               Menu
             </div>
             <ul class="list-items">
                <li><a href="/admin"><i class="fas fa-home"></i>DashBoard</a></li>

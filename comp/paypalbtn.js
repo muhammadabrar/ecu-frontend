@@ -3,22 +3,26 @@ import PaypalExpressBtn from "react-paypal-express-checkout";
 import axios from 'axios';
 import { useRouter } from 'next/router'
 
-export default function PayDownload(props) {
+export default function Paypalbtn(props) {
   const router = useRouter()
 
     const onSuccess = payment => {
         // Congratulation, it came here means everything's fine!
         console.log("The payment was succeeded!", payment);
-        
         // You can bind the "payment" object's value to your state or props or whatever here, please see below for sample returned data
-        const pay = async()=>{
+        const download = async()=>{
           
-          await axios.get(`${process.env.NEXT_PUBLIC_API}pay/${props.id}`)
+          await axios.get(`${process.env.NEXT_PUBLIC_API}download/${props.id}`)
           .then(res => {
-              props.paid()
+            if(res.data.download == 'done'){
+              router.push(`/paymentsuccess`)
+            }else{
+
+            }
+          console.log(res.data);
         })
         }
-        pay()
+        download()
       };
   
       const onCancel = data => {

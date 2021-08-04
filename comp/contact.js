@@ -10,7 +10,22 @@ export default function Intro(props) {
   const [input_msg, setinput_msg] = useState();
   const [datacreationSuccess, setdatacreationSuccess] = useState(false);
   const [datacreationErr, setdatacreationErr] = useState(false);
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const contacts = async () => {
+      const req = await axios.get(`${process.env.NEXT_PUBLIC_API}contact/`)
+        .then(res => {
+          setData(res.data.contact)
+        }).catch(err => {
+          // what now?
 
+          console.log("get contact error");
+          console.log(err);
+        })
+    }
+    
+    contacts()
+  }, []);
 
 
   const handlesubmit = async (e) => {
@@ -77,7 +92,7 @@ export default function Intro(props) {
             <div className="info-box  mb-4">
               <i className="fas fa-envelope"></i>
               <h3>Email Us</h3>
-              <p>contact@example.com</p>
+              <p>{data.email}</p>
             </div>
           </div>
 

@@ -95,17 +95,6 @@ export default function EditFile(props) {
 
 
 
- const onChangeHandler = async (event)=>{
-  setinput_file(event.target.files[0])
-  setinput_fileName(event.target.files[0].name)
-  const size = event.target.files[0].size / 1024
-  if(size >= 1024){
-  setinput_size(size/1024 + "MB")
-  }else{
-    setinput_size(size+ "KB")
-  }
-
-}
 const editfile = async(event)=>{
   event.preventDefault();
   const data = {
@@ -123,22 +112,8 @@ const editfile = async(event)=>{
     Tool_read : input_Tool_read,
     old_file : old_file
   }
-  const file = new FormData()
-  file.append('file', input_file) 
-  await axios.post(`${process.env.NEXT_PUBLIC_API}upload_ecufile`, file, { // receive two parameter endpoint url ,form data 
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    },
-    onUploadProgress: ProgressEvent => {
-    setIsprogresssbar(true)
-    setprogresssbar(ProgressEvent.loaded / ProgressEvent.total*100)
-  }    
-  })
-      .then(res => { // then print response status
-        console.log(res)
-         
-      })
-      await axios.put(`${process.env.NEXT_PUBLIC_API}updatefile/${props.id}`, {data})
+ 
+     const req = await axios.put(`${process.env.NEXT_PUBLIC_API}updatefile/${props.id}`, {data})
           .then(res => {
             console.log(res)
             if(res){
@@ -179,15 +154,10 @@ const editfile = async(event)=>{
   
         
             
-            {Isprogresssbar&& <progress value={progresssbar} max="100"> {progresssbar}% </progress>}
 
             <form onSubmit={editfile} className="form">
               <div className="row">
-              <div className="col-md-12 form-group Inputfile" >
-                  <h4 className="file_text" >drag and drop your file here</h4>
-                <input class="form-control form-control"
-                 onChange={onChangeHandler} type="file" style={{height: "300px"}} filename={''}  required/><br></br>
-                </div>
+              
                 
                 <div className="col-md-12 form-group mt-3 ">
                 <label>Make</label>

@@ -1,5 +1,6 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 
 import Select from 'react-select';
 import Nav from '../../comp/admin/navtop'
@@ -14,20 +15,44 @@ import Visiter from '../../comp/admin/visiters';
 import Files from '../../comp/admin/files';
 import useAuth from "../../hooks/useAuth";
 import { SemipolarLoading  } from 'react-loadingg';
+import { useRouter } from 'next/router'
+
+import { AuthContext } from '../../hooks/auth';
 
 
-
-
+axios.defaults.withCredentials = true
 
 
 
 export default function Index() {
+  const router = useRouter()
+
+  const [auth, setAuth] = useContext(AuthContext)
+  console.log("this is your id: "+auth)
+  const [name, setname] = useState('')
   const [loading, setLoading] = useState(true)
-useAuth()
+
+
 useEffect(() => {
+  const verify = async()=>{
+    const req = await axios.get(`${process.env.NEXT_PUBLIC_API}verifyAuth`)
+    .then(res => {
+        if(res.data.user){
+console.log("user is: "+res.data.user)
+            setname(res.data.user.name)
+            console.log(res.data.user.name + "your are in")
+
+          
+        }else{
+          router.push(`/admin/login`)
+        }
+      console.log(res.data);
+    })
+  }
+  verify()
   const timer = setTimeout(() => {
     setLoading(false)
-  }, 2500);
+  }, 1000);
   return () => clearTimeout(timer);
 }, []);
 
@@ -40,7 +65,7 @@ if(loading){
   return (
       <div className="admin pb-5 mb-5">
        
-<Sidebar />
+<Sidebar name={name} />
       <Breadcrumb />
      
       <States />

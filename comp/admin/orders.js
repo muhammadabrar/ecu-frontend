@@ -4,12 +4,15 @@ import axios from 'axios';
 export default function Order(props) {
   const [orders, setorders] = useState([]);
   const [status, setstatus] = useState("Pending");
-
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const days= ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  
   useEffect(() => {
     const ordersdata = async()=>{
       const req = await axios.get(`${process.env.NEXT_PUBLIC_API}orders/${status}`)
       .then(res => {
         setorders(res.data.data)
+console.log(res.data.data)
       })
     }
     ordersdata()
@@ -20,13 +23,13 @@ export default function Order(props) {
    <div className="table-title">
    <h4 className="text-title">Orders </h4>
    <MDBDropdown>
-      <MDBDropdownToggle color='light' className="btn btn-sm ">{status? "Pending": "Done"}</MDBDropdownToggle>
+      <MDBDropdownToggle color='light' className="btn btn-sm ">{status}</MDBDropdownToggle>
       <MDBDropdownMenu>
         <MDBDropdownItem>
-          <MDBDropdownLink href="#!" className={()=> setstatus(false)}>Pending</MDBDropdownLink>
+          <MDBDropdownLink href="#!" onClick={()=> setstatus('Pending')}>Pending</MDBDropdownLink>
         </MDBDropdownItem>
         <MDBDropdownItem>
-          <MDBDropdownLink href="#!" className={()=> setstatus(true)}>Done</MDBDropdownLink>
+          <MDBDropdownLink href="#!" onClick={()=> setstatus('Done')}>Done</MDBDropdownLink>
         </MDBDropdownItem>
       </MDBDropdownMenu>
     </MDBDropdown>

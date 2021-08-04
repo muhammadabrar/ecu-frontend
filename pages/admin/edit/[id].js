@@ -11,36 +11,38 @@ import useAuth from "../../../hooks/useAuth";
 import { SemipolarLoading  } from 'react-loadingg';
 
 
-
+axios.defaults.withCredentials = true
 
 
 
 
 export default function Index() {
+  const [name, setname] = useState('')
+
   const [loading, setLoading] = useState(true)
   const router = useRouter()
   const { id } = router.query
 console.log("id: "+ id)
 useEffect(() => {
-    const verify = async()=>{
+//   const verify = async()=>{
+//     const req = await axios.get(`${process.env.NEXT_PUBLIC_API}verifyAuth`)
+//     .then(res => {
+//         if(res.data.user){
+// console.log("user is: "+res.data.user)
+//             setname(res.data.user.name)
 
-        const req = await axios.get(`${process.env.NEXT_PUBLIC_API}verifyAuth`)
-        .then(res => {
-            if(res.data){
-              console.log("you are login")
-
-            }else{
-                if(res.data){
-              router.push(`/admin/login`)}
-            }
-        }).catch(err => {
-            // what now?
-      
-            console.log("verification  error");
-            console.log(err);
-        })
-      }
-      verify()
+//           if(res.data.user.id == auth){
+//             console.log(res.data.user.name + "your are in")
+//           }else{
+//           router.push(`/admin/login`)
+//         }
+//         }else{
+//           router.push(`/admin/login`)
+//         }
+//       console.log(res.data);
+//     })
+//   }
+//   verify()
 
   const timer = setTimeout(() => {
     setLoading(false)
